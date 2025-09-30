@@ -8,6 +8,7 @@
 </head>
 <body>
   <header class="site-header">
+    <div class="logo">TravelLite</div>
     <nav class="nav">
       <a href="index.html">Home</a>
       <a href="places.html">Places</a>
@@ -16,22 +17,31 @@
       <a href="tips.html">Travel Tips</a>
       <a href="contact.html">Contact</a>
     </nav>
-    <h1 class="page-title">Contact Us</h1>
   </header>
 
-  <main class="container">
-    <form class="contact-form" action="#" method="post">
-      <label for="name">Name</label>
-      <input id="name" name="name" type="text" placeholder="Your name">
+  <main class="container site-layout">
+    <aside class="sidebar">
+      <h3>Contact</h3>
+      <p>Email: example@travellite.test</p>
+      <p>Phone: +7 (XXX) XXX-XXXX</p>
+    </aside>
 
-      <label for="email">Email</label>
-      <input id="email" name="email" type="text" placeholder="you@example.com">
+    <section class="main-content">
+      <h1 class="page-title">Contact Us</h1>
 
-      <label for="message">Message</label>
-      <textarea id="message" name="message" rows="5" placeholder="Write your message"></textarea>
+      <form class="contact-form" action="#" method="post">
+        <label for="name">Name</label>
+        <input id="name" name="name" type="text" placeholder="Your name">
 
-      <button class="btn submit" type="submit">Send</button>
-    </form>
+        <label for="email">Email</label>
+        <input id="email" name="email" type="text" placeholder="you@example.com">
+
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="5" placeholder="Write your message"></textarea>
+
+        <button class="btn submit" type="submit">Send</button>
+      </form>
+    </section>
   </main>
 
   <footer class="site-footer">

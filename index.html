@@ -7,7 +7,8 @@
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <header id="banner" class="site-header">
+  <header class="site-header">
+    <div class="logo">TravelLite</div>
     <nav class="nav">
       <a href="index.html">Home</a>
       <a href="places.html">Places</a>
@@ -16,36 +17,53 @@
       <a href="tips.html">Travel Tips</a>
       <a href="contact.html">Contact</a>
     </nav>
-
-    <div class="hero container">
-      <h1>TravelLite</h1>
-      <p class="lead">Simple travel ideas and photos from Kazakhstan</p>
-      <a class="btn" href="places.html">Explore</a>
-    </div>
   </header>
 
-  <main class="container">
-    <section class="featured" aria-label="Featured">
-      <article class="card">
-        <img src="images/big_almaty_lake.jpg" alt="Big Almaty Lake" class="card-img">
-        <h2>Big Almaty Lake</h2>
-        <p>Alpine lake near Almaty — great for short hikes and photography.</p>
-      </article>
+  <main class="container site-layout">
+    <aside class="sidebar">
+      <h3>Quick Links</h3>
+      <ul>
+        <li><a href="places.html">Top Places</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="tips.html">Travel Tips</a></li>
+      </ul>
+    </aside>
 
-      <article class="card">
-        <img src="images/charyn_canyon.jpg" alt="Charyn Canyon" class="card-img">
-        <h2>Charyn Canyon</h2>
-        <p>Unique canyon with dramatic rock formations and viewpoints.</p>
-      </article>
-    </section>
+    <section class="main-content">
+      <div class="hero">
+        <h1>TravelLite</h1>
+        <p class="lead">Simple travel ideas and photos from Kazakhstan</p>
+        <a class="btn" href="places.html">Explore</a>
+      </div>
 
-    <section class="form-section" aria-labelledby="subscribe">
-      <h3 id="subscribe">Subscribe</h3>
-      <form class="simple-form" action="#" method="post">
-        <label for="email">Email</label>
-        <input id="email" name="email" type="text" placeholder="you@example.com">
-        <button class="btn submit" type="submit">Send</button>
-      </form>
+      <section class="featured" aria-label="Featured">
+        <article class="card">
+          <div>
+            <img src="images/big_almaty_lake.jpg" alt="Big Almaty Lake" class="card-img">
+            <h2>Big Almaty Lake</h2>
+            <p>Alpine lake near Almaty — great for short hikes and photography.</p>
+          </div>
+          <p><a class="btn" href="about.html#kolsai">Read more</a></p>
+        </article>
+
+        <article class="card">
+          <div>
+            <img src="images/charyn_canyon.jpg" alt="Charyn Canyon" class="card-img">
+            <h2>Charyn Canyon</h2>
+            <p>Unique canyon with dramatic rock formations and viewpoints.</p>
+          </div>
+          <p><a class="btn" href="about.html#charyn">Read more</a></p>
+        </article>
+      </section>
+
+      <section class="form-section" aria-labelledby="subscribe">
+        <h3 id="subscribe">Subscribe</h3>
+        <form class="simple-form" action="#" method="post">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="text" placeholder="you@example.com">
+          <button class="btn submit" type="submit">Send</button>
+        </form>
+      </section>
     </section>
   </main>
 
@@ -54,4 +72,3 @@
   </footer>
 </body>
 </html>
-
