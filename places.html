@@ -4,67 +4,174 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>TravelLite - Places</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-..." crossorigin="anonymous">
+
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <header class="site-header">
-    <div class="logo">TravelLite</div>
-    <nav class="nav">
-      <a href="index.html">Home</a>
-      <a href="places.html">Places</a>
-      <a href="gallery.html">Gallery</a>
-      <a href="about.html">About</a>
-      <a href="tips.html">Travel Tips</a>
-      <a href="contact.html">Contact</a>
-    </nav>
-  </header>
+  <!-- Navbar (same component across pages - Task 1 requirement: component across two pages) -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary" aria-label="Main navigation">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">TravelLite</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavPlaces" aria-controls="mainNavPlaces" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-  <main class="container site-layout">
-    <aside class="sidebar">
-      <h3>Categories</h3>
-      <ul>
-        <li><a href="#mountains">Mountains</a></li>
-        <li><a href="#lakes">Lakes</a></li>
-        <li><a href="#canyons">Canyons</a></li>
-      </ul>
-    </aside>
+      <div class="collapse navbar-collapse" id="mainNavPlaces">
+        <ul class="navbar-nav ms-auto gap-2">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link active" aria-current="page" href="places.html">Places</a></li>
+          <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="tips.html">Travel Tips</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
-    <section class="main-content">
-      <h1 class="page-title">Places</h1>
+  <main class="container my-4">
+    <div class="row g-4">
+      <aside class="col-12 col-md-4 col-lg-3">
+        <div class="bg-white p-3 rounded-3 shadow-sm">
+          <h3 class="h6">Categories</h3>
+          <ul class="list-unstyled">
+            <li><a href="#mountains">Mountains</a></li>
+            <li><a href="#lakes">Lakes</a></li>
+            <li><a href="#canyons">Canyons</a></li>
+          </ul>
+        </div>
+      </aside>
 
-      <section class="places-list" aria-label="Places list">
-        <article id="place-1" class="place">
-          <img src="images/charyn_canyon.jpg" alt="Charyn Canyon" class="place-img">
-          <div class="info">
-            <h2>Charyn Canyon</h2>
-            <p>Charyn Canyon is famous for its red rock formations and dramatic ridges — a photographer's dream.</p>
-            <a class="btn" href="about.html#charyn">Read more</a>
+      <section class="col-12 col-md-8 col-lg-9">
+        <h1 class="page-title mb-3">Places</h1>
+
+        <!-- CSS-only Card Group (Task 2 - use only CSS media queries) -->
+        <section class="cards-css mb-4" aria-label="CSS only card group">
+          <article class="css-card">
+            <img src="images/charyn_canyon.jpg" alt="Charyn Canyon" class="css-card-img">
+            <div class="css-card-body">
+              <h3>Charyn Canyon</h3>
+              <p>Famous for red rock formations and dramatic ridges — a photographer's dream.</p>
+              <a class="btn btn-sm btn-primary" href="about.html#charyn">Read more</a>
+            </div>
+          </article>
+
+          <article class="css-card">
+            <img src="images/borovoe.jpeg" alt="Burabay / Borovoe" class="css-card-img">
+            <div class="css-card-body">
+              <h3>Burabay (Borovoe)</h3>
+              <p>Pine forests, clear lakes and unusual rocky islands — great for family trips.</p>
+              <a class="btn btn-sm btn-primary" href="about.html#burabay">Read more</a>
+            </div>
+          </article>
+
+          <article class="css-card">
+            <img src="images/kolsai.jpeg" alt="Kolsai Lakes" class="css-card-img">
+            <div class="css-card-body">
+              <h3>Kolsai Lakes</h3>
+              <p>Three mountain lakes with turquoise water nested in alpine forest.</p>
+              <a class="btn btn-sm btn-primary" href="about.html#kolsai">Read more</a>
+            </div>
+          </article>
+        </section>
+
+        <!-- Bootstrap grid version (Task 3: two sections — 2-column and 3-column) -->
+        <section class="bootstrap-grid mb-4" aria-label="Bootstrap grid examples">
+          <!-- Two-column section (col-lg-6) -->
+          <div class="row mb-3">
+            <div class="col-12 col-md-6 col-lg-6">
+              <div class="card h-100">
+                <img src="images/big_almaty_lake.jpg" class="card-img-top" alt="Big Almaty Lake">
+                <div class="card-body">
+                  <h5 class="card-title">Big Almaty Lake</h5>
+                  <p class="card-text">Alpine lake near Almaty — great for short hikes and photography.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-6">
+              <div class="card h-100">
+                <img src="images/charyn_canyon.jpg" class="card-img-top" alt="Charyn Canyon">
+                <div class="card-body">
+                  <h5 class="card-title">Charyn Canyon</h5>
+                  <p class="card-text">Unique canyon with dramatic rock formations and viewpoints.</p>
+                </div>
+              </div>
+            </div>
           </div>
-        </article>
 
-        <article id="place-2" class="place">
-          <img src="images/borovoe.jpeg" alt="Burabay / Borovoe" class="place-img">
-          <div class="info">
-            <h2>Burabay (Borovoe)</h2>
-            <p>Burabay National Park offers pine forests, clear lakes and unusual rocky islands — great for family trips.</p>
-            <a class="btn" href="about.html#burabay">Read more</a>
-          </div>
-        </article>
+          <!-- Three-column section (col-lg-4) -->
+          <div class="row row-cols-1 row-cols-md-3 g-3">
+            <div class="col">
+              <div class="card h-100">
+                <img src="images/borovoe.jpeg" class="card-img-top" alt="Burabay / Borovoe">
+                <div class="card-body">
+                  <h6 class="card-title">Burabay (Borovoe)</h6>
+                  <p class="card-text small">Pine forests and lakes ideal for families.</p>
+                </div>
+              </div>
+            </div>
 
-        <article id="place-3" class="place">
-          <img src="images/kolsai.jpeg" alt="Kolsai Lakes" class="place-img">
-          <div class="info">
-            <h2>Kolsai Lakes</h2>
-            <p>Three mountain lakes with turquoise water nested in alpine forest — a perfect escape for hikers.</p>
-            <a class="btn" href="about.html#kolsai">Read more</a>
+            <div class="col">
+              <div class="card h-100">
+                <img src="images/kolsai.jpeg" class="card-img-top" alt="Kolsai Lakes">
+                <div class="card-body">
+                  <h6 class="card-title">Kolsai Lakes</h6>
+                  <p class="card-text small">Turquoise lakes and hiking trails.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="card h-100">
+                <img src="images/big_almaty_lake.jpg" class="card-img-top" alt="Big Almaty Lake">
+                <div class="card-body">
+                  <h6 class="card-title">More Places</h6>
+                  <p class="card-text small">Explore more nature spots across Kazakhstan.</p>
+                </div>
+              </div>
+            </div>
           </div>
-        </article>
+        </section>
+
+        <!-- Simple example form using Bootstrap form-classes (Task 9) -->
+        <section class="bg-white p-3 rounded-3 shadow-sm" aria-labelledby="contactFormHeading">
+          <h2 id="contactFormHeading" class="h6 mb-2">Contact / Ask about a place</h2>
+          <form class="row g-2" action="#" method="post" novalidate>
+            <div class="col-12 col-md-6">
+              <label for="name" class="form-label">Name</label>
+              <input id="name" name="name" class="form-control" type="text" required>
+            </div>
+            <div class="col-12 col-md-6">
+              <label for="email2" class="form-label">Email</label>
+              <input id="email2" name="email" class="form-control" type="email" required>
+            </div>
+            <div class="col-12">
+              <label for="message" class="form-label">Message</label>
+              <textarea id="message" name="message" class="form-control" rows="4"></textarea>
+            </div>
+            <div class="col-auto">
+              <div class="btn-group" role="group" aria-label="Submit group"> <!-- Task 6: btn-group -->
+                <button type="submit" class="btn btn-primary">Send</button>
+                <button type="reset" class="btn btn-outline-secondary">Reset</button>
+              </div>
+            </div>
+          </form>
+        </section>
+
       </section>
-    </section>
+    </div>
   </main>
 
-  <footer class="site-footer">
-    <p>Team: Mukhammedali Khassenov, Shakarim Ainatayev, Kuanysh Seitzhan</p>
+  <footer class="site-footer text-white bg-dark py-3">
+    <div class="container text-center">
+      <p class="mb-0">Team: Mukhammedali Khassenov, Shakarim Ainatayev, Kuanysh Seitzhan</p>
+    </div>
   </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-..." crossorigin="anonymous"></script>
 </body>
 </html>
