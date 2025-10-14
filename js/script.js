@@ -17,14 +17,26 @@ document.addEventListener('DOMContentLoaded', function() {
   setInterval(updateDateTime, 1000);
 
   /* ===== Task 4: Change background color ===== */
-  const bgBtn = document.getElementById('bg-toggle');
-  const colors = ['#f7f9fc','#fff7e6','#f0fff4','#fff0f6','#e8f0ff','#fffbe6'];
-  if(bgBtn){
-    bgBtn.addEventListener('click', function(){
-      const c = colors[Math.floor(Math.random()*colors.length)];
-      document.body.style.background = c;
-    });
+let isBlue = false;
+
+function toggleBackground() {
+  const body = document.body;
+
+  if (isBlue) {
+    body.style.background = "#ffffff";
+  } else {
+    body.style.background = "#b3d9ff";
   }
+
+  isBlue = !isBlue;
+}
+
+const colorBtn = document.getElementById("colorToggleBtn");
+if (colorBtn) {
+  colorBtn.addEventListener("click", toggleBackground);
+}
+
+
 
   /* ===== Task 3: Popup subscription/contact form ===== */
   const openPopup = document.getElementById('open-popup');
