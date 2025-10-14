@@ -43,7 +43,7 @@ p { margin: 0.4rem 0; }
   justify-content: space-between;
   align-items: center;
   padding: 16px 20px;
-  background-image: url('../images/hero.jpg');
+  background-image: url('images/hero.jpg');
   background-size: cover;
   background-position: center;
   color: #fff;
@@ -149,7 +149,7 @@ p { margin: 0.4rem 0; }
 
 /* FORM */
 .simple-form label, .contact-form label { display:block; margin-top: 8px; font-weight:600; }
-.simple-form input[type="text"], .contact-form input[type="text"], .contact-form textarea {
+.simple-form input[type="text"], .contact-form input[type="text"], .contact-form textarea, .contact-form input[type="password"] {
   width: 100%;
   padding: 8px 10px;
   margin-top: 6px;
@@ -223,6 +223,17 @@ p { margin: 0.4rem 0; }
   object-fit: cover;
 }
 
+/* ACCORDION */
+.accordion-item { background: white; border: 1px solid #e6eef6; border-radius: 6px; margin-bottom: 8px; overflow: hidden; }
+.accordion-title { padding: 12px; cursor: pointer; font-weight:700; display:flex; justify-content:space-between; align-items:center; }
+.accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.28s ease, padding 0.28s ease; padding: 0 12px; }
+.accordion-item.open .accordion-content { padding: 12px; }
+
+/* POPUP modal */
+.modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.4); display:flex; align-items:center; justify-content:center; z-index:9999; }
+.modal { background: white; padding: 16px; border-radius: 8px; width: 90%; max-width: 420px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); position:relative; }
+.modal .close { position:absolute; right:10px; top:8px; cursor:pointer; font-weight:700; background:none; border:none; font-size:18px; }
+
 /* FOOTER */
 .site-footer {
   background: #0f172a;
@@ -234,7 +245,7 @@ p { margin: 0.4rem 0; }
 
 /* RESPONSIVE */
 @media (max-width: 900px) {
-  .site-layout { grid-template-columns: 1fr; grid-template-areas: "main"; }
+  .site-layout { grid-template-columns: 1fr; grid-template-areas: "main" "sidebar"; }
   .sidebar { order: 2; }
   .main-content { order: 1; }
   .nav { gap: 0.5rem; padding: 6px 8px; }
@@ -243,7 +254,7 @@ p { margin: 0.4rem 0; }
 }
 
 @media (max-width: 480px) {
-  .nav { display: none; } /* hide nav on tiny screens; you can add a hamburger later */
+  .nav { display: none; }
   .logo { font-size: 1.1rem; }
   .hero { padding: 12px; }
   .gallery-item-wrap img { height: 140px; }
