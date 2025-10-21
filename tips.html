@@ -3,38 +3,62 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>TravelLite — Travel Tips</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <title>TravelLite — Tips</title>
 
-  <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
-  <div class="container">
-    <a class="navbar-brand fw-bold" href="index.html">TravelLite</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
-      aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+  <header class="bg-accent">
+    <nav class="container navbar navbar-expand-lg navbar-dark">
+      <a class="navbar-brand fw-bold" href="index.html">TravelLite</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="places.html">Places</a></li>
+          <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
+          <li class="nav-item"><a class="nav-link active" href="tips.html">Tips</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        </ul>
+        <div class="d-flex align-items-center ms-3">
+          <div id="greeting" class="me-2 text-white small"></div>
+          <button class="btn btn-sm btn-outline-light theme-toggle" type="button" aria-pressed="false">Toggle Night</button>
+        </div>
+      </div>
+    </nav>
+  </header>
 
-    <div class="collapse navbar-collapse" id="mainNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="places.html">Places</a></li>
-        <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
-        <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-        <li class="nav-item"><a class="nav-link" href="tips.html">Travel Tips</a></li>
-        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-      </ul>
+  <main class="container my-4">
+    <h2>Travel Tips</h2>
+    <p class="text-muted small">Use the left and right arrow keys to cycle through the tips.</p>
+
+    <div id="tips-list" class="row g-3 mt-2">
+      <div class="col-12">
+        <div class="tip p-3 rounded" tabindex="0">Tip 1: Check the weather and dress in layers.</div>
+      </div>
+      <div class="col-12">
+        <div class="tip p-3 rounded" tabindex="0">Tip 2: Keep digital and physical copies of important documents.</div>
+      </div>
+      <div class="col-12">
+        <div class="tip p-3 rounded" tabindex="0">Tip 3: Bring a portable charger for long trips.</div>
+      </div>
+      <div class="col-12">
+        <div class="tip p-3 rounded" tabindex="0">Tip 4: Learn a few simple local phrases (hello, thank you).</div>
+      </div>
     </div>
-  </div>
-  <span id="datetime" class="text-light ms-3 small"></span>
-</nav>
+  </main>
 
+  <footer class="bg-light py-3">
+    <div class="container text-center small text-muted">TravelLite — Tips</div>
+  </footer>
 
-  <main class="container site-layout">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>  <main class="container site-layout">
     <aside class="sidebar">
       <h3>Tip Categories</h3>
       <ul>
