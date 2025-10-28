@@ -4,61 +4,39 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>TravelLite — Gallery</title>
+  <link rel="stylesheet" href="css/style.css" />
 
+  <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
-  <header class="bg-accent">
-    <nav class="container navbar navbar-expand-lg navbar-dark">
-      <a class="navbar-brand fw-bold" href="index.html">TravelLite</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="mainNav">
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="places.html">Places</a></li>
-          <li class="nav-item"><a class="nav-link active" href="gallery.html">Gallery</a></li>
-          <li class="nav-item"><a class="nav-link" href="tips.html">Tips</a></li>
-          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-        </ul>
-        <div class="d-flex align-items-center ms-3">
-          <div id="greeting" class="me-2 text-white small"></div>
-          <button class="btn btn-sm btn-outline-light theme-toggle" type="button" aria-pressed="false">Toggle Night</button>
-        </div>
-      </div>
-    </nav>
-  </header>
+  <div id="scroll-progress" aria-hidden="true"></div>
+  <!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="index.html">TravelLite</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+      aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-  <main class="container my-4">
-    <h2>Gallery</h2>
-
-    <div class="d-flex flex-column flex-md-row gap-3">
-      <div class="gallery-large flex-grow-1">
-        <img id="gallery-main-img" class="img-fluid rounded" src="images/almaty1.jpg" alt="Main gallery image">
-      </div>
-
-      <div class="gallery-thumbs d-flex flex-row flex-md-column gap-2">
-        <button class="thumb active" data-src="images/almaty1.jpg" aria-label="Thumbnail 1"><img src="images/almaty1.jpg" class="img-thumbnail" alt="thumb1"></button>
-        <button class="thumb" data-src="images/almaty2.jpg" aria-label="Thumbnail 2"><img src="images/almaty2.jpg" class="img-thumbnail" alt="thumb2"></button>
-        <button class="thumb" data-src="images/big_almaty_lake.jpg" aria-label="Thumbnail 3"><img src="images/big_almaty_lake.jpg" class="img-thumbnail" alt="thumb3"></button>
-        <button class="thumb" data-src="images/charyn_canyon.jpg" aria-label="Thumbnail 4"><img src="images/charyn_canyon.jpg" class="img-thumbnail" alt="thumb4"></button>
-        <button class="thumb" data-src="images/kaindy.jpeg" aria-label="Thumbnail 5"><img src="images/kaindy.jpeg" class="img-thumbnail" alt="thumb5"></button>
-      </div>
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="places.html">Places</a></li>
+        <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
+        <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="tips.html">Travel Tips</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+      </ul>
     </div>
+  </div>
+  <span id="datetime" class="text-light ms-3 small"></span>
+</nav>
 
-    <p class="mt-3 small text-muted">Use left / right arrow keys to navigate thumbnails.</p>
-  </main>
 
-  <footer class="bg-light py-3">
-    <div class="container text-center small text-muted">TravelLite — Gallery</div>
-  </footer>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="js/script.js"></script>
-</body>
-</html>  <main class="container site-layout">
+  <main class="container site-layout">
     <aside class="sidebar">
       <h3>Gallery Filters</h3>
       <ul>
@@ -118,6 +96,14 @@
         </figure>
 
       </section>
+    </section>
+  
+    <section class="mt-4">
+      <h3>Example code snippet</h3>
+      <div class="position-relative">
+        <pre id="code-snippet" class="p-3 bg-light rounded">const example = "Copy me";</pre>
+        <button class="btn btn-sm btn-outline-secondary copy-btn" data-copy="#code-snippet" style="position:absolute; top:10px; right:10px;">Copy</button>
+      </div>
     </section>
   </main>
 
