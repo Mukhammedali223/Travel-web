@@ -1,294 +1,30 @@
-// script.js — advanced JS features for Assignment 6
-// All features: DOM manipulation, events, keyboard navigation, animations, sound, theme toggle
+// script.js - handles form validation, accordion, popup, bg color, and date/time
+document.addEventListener('DOMContentLoaded', function() {
+  /* ===== Task 5: Date and time display ===== */
+  const dtElem = document.getElementById('datetime');
+  function updateDateTime(){
+    if(!dtElem) return;
+    const now = new Date();
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const date = now.toLocaleDateString(undefined, options);
+    let hours = now.getHours();
+    const minutes = now.getMinutes().toString().padStart(2,'0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = (hours % 12) || 12;
+    dtElem.textContent = `${date}, ${hours}:${minutes} ${ampm}`;
+  }
+  updateDateTime();
+  setInterval(updateDateTime, 1000);
 
-document.addEventListener('DOMContentLoaded', () => {
-
-  /* ---------------------------
-     Data: places (objects array)
-     --------------------------- */
-  const places = [
-    { id: 1, name: "Big Almaty Lake", image: "images/big_almaty_lake.jpg", short: "Mountain lake with turquoise water.", long: "Big Almaty Lake is a beautiful high-altitude reservoir surrounded by alpine scenery. Great for photography and short hikes." },
-    { id: 2, name: "Charyn Canyon", image: "images/charyn_canyon.jpg", short: "Canyon with unique rock formations.", long: "Charyn Canyon is known for its red sandstone cliffs and scenic valleys. Bring water and good footwear." },
-    { id: 3, name: "Kaindy Lake", image: "images/kaindy.jpeg", short: "Submerged forest lake.", long: "Kaindy Lake is famous for the submerged pine trunks that protrude from the clear water — very photogenic." },
-    { id: 4, name: "Kolsai Lakes", image: "images/kolsai.jpeg", short: "Chain of alpine lakes in a forest.", long: "Kolsai Lakes offer several levels of alpine lakes connected by hiking trails; a peaceful nature escape." }
-  ];
-
-  /* ---------------------------
-     Render places cards (DOM, loops)
-     --------------------------- */
-  const placesContainer = document.getElementById('places-container');
-  if (placesContainer) {
-    placesContainer.innerHTML = '';
-    places.forEach(place => {
-      const col = document.createElement('div');
-      col.className = 'col-12 col-md-6 col-lg-4';
-      col.innerHTML = `
-        <div class="card h-100">
-          <img src="${place.image}" alt="${place.name}" class="place-img card-img-top">
-          <div class="card-body d-flex flex-column">
-            <h5 class="card-title">${place.name}</h5>
-            <p class="card-text description" data-short="${place.short}" data-long="${place.long}">${place.short}</p>
-            <div class="mt-auto d-flex justify-content-between align-items-center">
-              <div class="rating" data-id="${place.id}" aria-label="Rating for ${place.name}"></div>
-              <div>
-                <button class="btn btn-sm btn-readmore">Read more</button>
-              </div>
-            </div>
-          </div>
-        </div>`;
-      placesContainer.appendChild(col);
-
-      // create star rating inside the rating container
-      const ratingEl = col.querySelector('.rating');
-      createStarRating(ratingEl);
-      loadStoredRating(ratingEl);
+  /* ===== Task 4: Change background color ===== */
+  const bgBtn = document.getElementById('bg-toggle');
+  const colors = ['#f7f9fc','#fff7e6','#f0fff4','#fff0f6','#e8f0ff','#fffbe6'];
+  if(bgBtn){
+    bgBtn.addEventListener('click', function(){
+      const c = colors[Math.floor(Math.random()*colors.length)];
+      document.body.style.background = c;
     });
   }
-
-  /* ---------------------------
-     Read more toggle (delegation)
-     --------------------------- */
-  document.body.addEventListener('click', (e) => {
-    if (e.target.classList.contains('btn-readmore')) {
-      const btn = e.target;
-      const desc = btn.closest('.card').querySelector('.description');
-      if (!desc) return;
-      const expanded = btn.getAttribute('data-expanded') === 'true';
-      if (expanded) {
-        desc.textContent = desc.dataset.short;
-        btn.textContent = 'Read more';
-        btn.setAttribute('data-expanded', 'false');
-      } else {
-        desc.textContent = desc.dataset.long;
-        btn.textContent = 'Read less';
-        btn.setAttribute('data-expanded', 'true');
-      }
-    }
-  });
-
-  /* ---------------------------
-     Create star rating buttons
-     --------------------------- */
-  function createStarRating(container) {
-    if (!container) return;
-    container.innerHTML = '';
-    for (let i = 1; i <= 5; i++) {
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'star-btn';
-      btn.setAttribute('data-value', i);
-      btn.setAttribute('aria-label', i + ' star');
-      btn.innerHTML = '★';
-      container.appendChild(btn);
-    }
-
-    // click handler (delegated on container)
-    container.addEventListener('click', (ev) => {
-      const btn = ev.target.closest('button[data-value]');
-      if (!btn) return;
-      const value = parseInt(btn.dataset.value, 10);
-      setStarVisuals(container, value);
-      const id = container.dataset.id;
-      if (id) localStorage.setItem('rating_' + id, value);
-      playClickTone();
-    });
-  }
-
-  function setStarVisuals(container, value) {
-    container.querySelectorAll('button[data-value]').forEach(b => {
-      const v = parseInt(b.dataset.value, 10);
-      if (v <= value) b.classList.add('on'); else b.classList.remove('on');
-    });
-  }
-
-  function loadStoredRating(container) {
-    const id = container.dataset.id;
-    if (!id) return;
-    const stored = localStorage.getItem('rating_' + id);
-    if (stored) setStarVisuals(container, parseInt(stored, 10));
-  }
-
-  /* ---------------------------
-     Gallery: thumbnails change main image; keyboard navigation
-     --------------------------- */
-  const mainImg = document.getElementById('gallery-main-img');
-  const thumbButtons = Array.from(document.querySelectorAll('.thumb'));
-  let activeThumb = 0;
-  if (thumbButtons.length) {
-    // set tabindex and event listeners
-    thumbButtons.forEach((btn, idx) => {
-      btn.setAttribute('tabindex', '0');
-      btn.addEventListener('click', () => {
-        const src = btn.getAttribute('data-src');
-        if (src && mainImg) mainImg.src = src;
-        thumbButtons.forEach(t => t.classList.remove('active'));
-        btn.classList.add('active');
-        activeThumb = idx;
-        playClickTone();
-      });
-      btn.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); btn.click(); }
-      });
-    });
-
-    // keyboard nav for gallery (global)
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowRight') {
-        activeThumb = (activeThumb + 1) % thumbButtons.length;
-        thumbButtons[activeThumb].focus();
-        thumbButtons[activeThumb].click();
-      } else if (e.key === 'ArrowLeft') {
-        activeThumb = (activeThumb - 1 + thumbButtons.length) % thumbButtons.length;
-        thumbButtons[activeThumb].focus();
-        thumbButtons[activeThumb].click();
-      }
-    });
-  }
-
-  /* ---------------------------
-     Show current time button
-     --------------------------- */
-  const timeBtn = document.getElementById('show-time-btn');
-  const timeDisplay = document.getElementById('time-display');
-  if (timeBtn && timeDisplay) {
-    timeBtn.addEventListener('click', () => {
-      const now = new Date();
-      timeDisplay.textContent = now.toLocaleTimeString();
-      playClickTone();
-    });
-  }
-
-  /* ---------------------------
-     Theme toggle (day/night) with CSS variables
-     --------------------------- */
-  const themeButtons = Array.from(document.querySelectorAll('.theme-toggle'));
-  function applySavedTheme() {
-    if (localStorage.getItem('site-theme') === 'night') {
-      document.body.classList.add('dark-mode');
-      themeButtons.forEach(b => b.setAttribute('aria-pressed', 'true'));
-    } else {
-      document.body.classList.remove('dark-mode');
-      themeButtons.forEach(b => b.setAttribute('aria-pressed', 'false'));
-    }
-  }
-  themeButtons.forEach(btn => btn.addEventListener('click', () => {
-    const isNight = document.body.classList.toggle('dark-mode');
-    btn.setAttribute('aria-pressed', String(isNight));
-    if (isNight) localStorage.setItem('site-theme', 'night'); else localStorage.removeItem('site-theme');
-  }));
-  applySavedTheme();
-
-  /* ---------------------------
-     Greeting by time (switch)
-     --------------------------- */
-  const greetEl = document.getElementById('greeting');
-  if (greetEl) {
-    const hour = new Date().getHours();
-    let mode;
-    if (hour < 12) mode = 'morning';
-    else if (hour < 18) mode = 'afternoon';
-    else mode = 'evening';
-
-    switch (mode) {
-      case 'morning': greetEl.textContent = 'Good morning'; break;
-      case 'afternoon': greetEl.textContent = 'Good afternoon'; break;
-      default: greetEl.textContent = 'Good evening'; break;
-    }
-  }
-
-  /* ---------------------------
-     Contact form: simulated async POST
-     --------------------------- */
-  const contactForm = document.getElementById('contact-form');
-  if (contactForm) {
-    const feedback = document.getElementById('contact-feedback');
-    contactForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const btn = contactForm.querySelector('button[type="submit"]');
-      btn.disabled = true;
-      btn.textContent = 'Sending...';
-      // simulate async request
-      setTimeout(() => {
-        btn.disabled = false;
-        btn.textContent = 'Send message';
-        if (feedback) {
-          feedback.innerHTML = `<div class="alert alert-success">Message sent (simulation). Thank you!</div>`;
-        }
-        contactForm.reset();
-        playClickTone();
-      }, 900);
-    });
-  }
-
-  /* ---------------------------
-     Tips keyboard navigation
-     --------------------------- */
-  const tips = Array.from(document.querySelectorAll('.tip'));
-  let tipIndex = 0;
-  if (tips.length) {
-    // highlight first
-    tips.forEach(t => t.classList.remove('focused-tip'));
-    tips[0].classList.add('focused-tip');
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowRight') {
-        tips[tipIndex].classList.remove('focused-tip');
-        tipIndex = (tipIndex + 1) % tips.length;
-        tips[tipIndex].classList.add('focused-tip');
-        tips[tipIndex].focus();
-      } else if (e.key === 'ArrowLeft') {
-        tips[tipIndex].classList.remove('focused-tip');
-        tipIndex = (tipIndex - 1 + tips.length) % tips.length;
-        tips[tipIndex].classList.add('focused-tip');
-        tips[tipIndex].focus();
-      }
-    });
-  }
-
-  /* ---------------------------
-     Higher-order function example
-     --------------------------- */
-  window.filterPlaces = function(minRating, callback) {
-    // example usage: filterPlaces(4, res => console.log(res));
-    const results = places.filter(p => {
-      const stored = localStorage.getItem('rating_' + p.id);
-      const r = stored ? parseInt(stored, 10) : 0;
-      return r >= minRating;
-    });
-    if (typeof callback === 'function') callback(results);
-  };
-
-  /* ---------------------------
-     Sound: WebAudio click tone (short)
-     --------------------------- */
-  function playClickTone() {
-    try {
-      const ctx = new (window.AudioContext || window.webkitAudioContext)();
-      const o = ctx.createOscillator();
-      const g = ctx.createGain();
-      o.type = 'sine';
-      o.frequency.value = 700;
-      g.gain.value = 0.03;
-      o.connect(g); g.connect(ctx.destination);
-      o.start();
-      setTimeout(() => { o.stop(); ctx.close(); }, 120);
-    } catch (err) {
-      // ignore if not allowed
-      // console.warn('Audio error', err);
-    }
-  }
-
-  /* ---------------------------
-     Small helpers: set initial states
-     --------------------------- */
-  // if gallery present, ensure first thumb active
-  if (thumbButtons.length && mainImg) {
-    thumbButtons.forEach(b => b.classList.remove('active'));
-    thumbButtons[0].classList.add('active');
-  }
-});}
-
-
 
   /* ===== Task 3: Popup subscription/contact form ===== */
   const openPopup = document.getElementById('open-popup');
@@ -312,6 +48,8 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
     `;
     document.body.appendChild(backdrop);
+    console.log("Popup created");
+
     // events
     backdrop.addEventListener('click', function(e){
       if(e.target === backdrop) backdrop.remove();
@@ -319,7 +57,8 @@ document.addEventListener('DOMContentLoaded', () => {
     backdrop.querySelector('.close').addEventListener('click', function(){ backdrop.remove(); });
     // attach validation for popup form (reuse validateForm function)
     const popupForm = document.getElementById('popup-form');
-    popupForm.addEventListener('submit', function(e){
+    if(popupForm){
+      popupForm.addEventListener('submit', function(e){
       e.preventDefault();
       const email = popupForm.querySelector('input[name="email"]').value.trim();
       const p1 = popupForm.querySelector('input[name="password"]').value;
@@ -333,7 +72,8 @@ document.addEventListener('DOMContentLoaded', () => {
       if(p1 !== p2){ alert('Passwords do not match'); return; }
       alert('Thank you for subscribing!');
       backdrop.remove();
-    });
+      });
+    }
   }
   if(openPopup) openPopup.addEventListener('click', createModal);
 
@@ -397,3 +137,177 @@ document.addEventListener('DOMContentLoaded', () => {
     form.querySelectorAll('.field-error').forEach(x => x.remove());
   }
 });
+
+// expose places for jQuery features
+try { window.placesData = (typeof places !== 'undefined') ? places : [];} catch(e) { window.placesData = window.placesData || []; }
+
+
+
+/* jQuery features for Assignment 7 */
+$(document).ready(function() {
+  console.log("jQuery is ready!");
+
+  // Build search list from placesData or page titles
+  function buildSearchList() {
+    var list = $("#search-list");
+    if (!list.length) {
+      $("<ul id='search-list' class='list-group mt-2'></ul>").insertAfter("#search-input");
+      list = $("#search-list");
+    }
+    list.empty();
+    var source = [];
+    if (window.placesData && window.placesData.length) {
+      source = window.placesData.map(function(p){ return p.name || p.title || p; });
+    } else {
+      $(".card h3, .card-title, .card h5").each(function() { source.push($(this).text().trim()); });
+    }
+    source.forEach(function(item) {
+      $("<li class='list-group-item list-group-item-action'></li>").text(item).appendTo(list);
+    });
+  }
+  buildSearchList();
+
+  // Real-time search, suggestions and highlighting
+  $("#search-input").on("keyup", function() {
+    var q = $(this).val().toLowerCase().trim();
+    if (!q) { $("#suggestions").hide(); } else {
+      var suggestions = [];
+      $("#search-list li").each(function() {
+        var txt = $(this).text();
+        if (txt.toLowerCase().indexOf(q) !== -1) suggestions.push(txt);
+      });
+      var sugBox = $("#suggestions").empty();
+      suggestions.slice(0,6).forEach(function(s) { $("<button class='list-group-item list-group-item-action'></button>").text(s).appendTo(sugBox); });
+      if (suggestions.length) sugBox.show(); else sugBox.hide();
+    }
+    // live filter cards
+    $(".card").each(function() {
+      var text = $(this).text().toLowerCase();
+      if (!q || text.indexOf(q) !== -1) $(this).show(); else $(this).hide();
+    });
+    // remove old highlights
+    $(".search-highlight").each(function(){ $(this).replaceWith($(this).text()); });
+    if (q) {
+      var re = new RegExp('('+q+')', 'ig');
+      $("p, h1, h2, h3, h4, h5, .card-title, .card-text").each(function() {
+        var html = $(this).html();
+        if (html) {
+          html = html.replace(re, '<span class="search-highlight">$1</span>');
+          $(this).html(html);
+        }
+      });
+    }
+  });
+
+  // suggestions click
+  $(document).on("click", "#suggestions .list-group-item", function() {
+    $("#search-input").val($(this).text()).trigger("keyup");
+    $("#suggestions").hide();
+  });
+
+  // hide suggestions when clicking outside
+  $(document).on("click", function(e) {
+    if (!$(e.target).closest("#suggestions, #search-input").length) $("#suggestions").hide();
+  });
+
+  // Scroll progress bar
+  var $progress = $("#scroll-progress");
+  if (!$progress.length) { $("body").prepend('<div id="scroll-progress"></div>'); $progress = $("#scroll-progress"); }
+  $progress.css({position: "fixed", top:0, left:0, height: "4px", width: "0%", "z-index": 9999, "background": "linear-gradient(90deg,#ff8a00,#ff2d95)"});
+  $(window).on("scroll resize", function() {
+    var docHeight = $(document).height() - $(window).height();
+    var scrollTop = $(window).scrollTop();
+    var pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    $progress.css("width", pct + "%");
+  });
+
+  // Animated counters when visible
+  function animateCounters() {
+    $(".counter").each(function() {
+      var $this = $(this);
+      var target = parseInt($this.attr("data-target") || $this.text()) || 0;
+      if ($this.data("counted")) return;
+      if ($this.is(":visible") && $(window).scrollTop() + $(window).height() > $this.offset().top) {
+        $this.data("counted", true);
+        $({count: 0}).animate({count: target}, {
+          duration: 1200,
+          easing: 'swing',
+          step: function(now) { $this.text(Math.floor(now)); },
+          complete: function() { $this.text(target); }
+        });
+      }
+    });
+  }
+  $(window).on("scroll load resize", animateCounters);
+  animateCounters();
+
+  // Loading spinner on submit (contact form)
+  $(document).on("submit", "#contact-form", function(e) {
+    e.preventDefault();
+    var $form = $(this);
+    var $btn = $form.find('button[type="submit"]');
+    var origHtml = $btn.html();
+    $btn.prop("disabled", true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Please wait...');
+    setTimeout(function() {
+      $btn.prop("disabled", false).html(origHtml);
+      $("#contact-feedback").html('<div class="alert alert-success">Form submitted successfully (simulated).</div>');
+      showToast("Message sent successfully");
+      $form.trigger("reset");
+    }, 1000);
+  });
+
+  // Toast notifications
+  if (!$("#toast-container").length) $("body").append('<div id="toast-container" style="position:fixed; bottom:20px; right:20px; z-index:99999;"></div>');
+  function showToast(msg, timeout) {
+    timeout = timeout || 2500;
+    var $t = $('<div class="toast-item alert alert-info shadow-sm" role="alert">'+msg+'</div>');
+    $("#toast-container").append($t);
+    $t.hide().fadeIn(200).delay(timeout).fadeOut(400, function(){ $(this).remove(); });
+  }
+
+  // Copy to clipboard
+  $(document).on("click", ".copy-btn", function() {
+    var selector = $(this).data("copy");
+    var text = $(selector).text();
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(function() { showToast("Copied to clipboard!"); })
+      .catch(function(){ showToast("Copy failed"); });
+    } else {
+      var $temp = $("<textarea>");
+      $("body").append($temp);
+      $temp.val(text).select();
+      try { document.execCommand("copy"); showToast("Copied to clipboard!"); } catch (e) { showToast("Copy failed"); }
+      $temp.remove();
+    }
+    var $btn = $(this);
+    var old = $btn.html();
+    $btn.html('✓ Copied');
+    setTimeout(function(){ $btn.html(old); }, 1200);
+  });
+
+  // Lazy loading images
+  function lazyLoadImages() {
+    $("img[data-src]").each(function() {
+      var $img = $(this);
+      var rectTop = $img.offset().top;
+      var winBottom = $(window).scrollTop() + $(window).height() + 200;
+      if (rectTop < winBottom) {
+        $img.attr("src", $img.data("src"));
+        $img.removeAttr("data-src");
+      }
+    });
+  }
+  $(window).on("scroll resize load", lazyLoadImages);
+  lazyLoadImages();
+
+  // initialize gallery thumbs data-src -> lazy loading
+  $(".gallery-thumbs img").each(function() {
+    var $img = $(this);
+    if (!$img.attr("data-src") && $img.attr("src")) {
+      $img.attr("data-src", $img.attr("src"));
+      $img.attr("src", "");
+    }
+  });
+  lazyLoadImages();
+
+}); // end document ready
