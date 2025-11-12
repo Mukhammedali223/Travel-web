@@ -1,12 +1,13 @@
 // script.js
 /* global bootstrap, $ */
-
+let isDark = false
 $(document).ready(function () {
   console.log("jQuery is ready!");
 
   
   /* ---------- theme - Day / Night (localStorage) ---------- */
-  var THEME_KEY = 'site-theme';
+  const THEME_KEY = 'site-theme';
+
   function applyTheme(theme) {
     if (theme === 'dark') {
       document.body.classList.add('dark');
@@ -16,21 +17,27 @@ $(document).ready(function () {
       $('[id^=theme-toggle]').attr('aria-pressed', 'false').text('🌙');
     }
   }
+
   function loadTheme() {
-    var t = localStorage.getItem(THEME_KEY);
-    if (!t) {
-      var pref = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      t = pref;
+    let theme = localStorage.getItem(THEME_KEY);
+    if (!theme) {
+      theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     }
-    applyTheme(t);
+    applyTheme(theme);
   }
+
   loadTheme();
+
   $(document).on('click', '#theme-toggle', function () {
-    var isDark = document.body.classList.contains('dark');
-    var newTheme = isDark ? 'light' : 'dark';
+    const currentTheme = document.body.classList.contains('dark') ? 'dark' : 'light';
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
     localStorage.setItem(THEME_KEY, newTheme);
     applyTheme(newTheme);
-    showToast((newTheme === 'dark' ? 'Night' : 'Day') + ' mode enabled', 1200);
+
+    if (typeof showToast === 'function') {
+      showToast(`${newTheme === 'dark' ? 'Night' : 'Day'} mode enabled`, 1200);
+    }
   });
 
   /* ---------- ensure modals never leave backdrop or block scroll ---------- */
