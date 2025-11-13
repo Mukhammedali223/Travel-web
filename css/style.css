@@ -37,6 +37,7 @@ html, body {
   min-height: 100vh;
   height: 100%;
   background: var(--bg);
+  background-color: var(--bg);
   color: var(--text);
   transition: background-color .3s var(--anim), color .3s var(--anim);
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
@@ -70,6 +71,47 @@ html, body {
   margin-top: 28px;
   background: var(--card-bg);
   border-top: 1px solid var(--border);
+}
+
+.avatar {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+
+.avatar:hover {
+  transform: scale(1.05);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+
+.avatar img {
+  width: 110%;
+  height: 110%;
+  object-fit: contain;
+  display: block;
+  pointer-events: none;
+}
+
+@media (max-width: 600px) {
+  .avatar {
+    width: 36px;
+    height: 36px;
+  }
+  .avatar img {
+    width: 75%;
+    height: 75%;
+  }
 }
 
 /* --- Hero --- */
@@ -213,7 +255,7 @@ html, body {
 a:focus, button:focus, input:focus, textarea:focus { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: 6px; }
 
 /* --- Dark theme overrides for all elements --- */
-body.dark, body.dark html, body.dark main, body.dark .container, body.dark .site-layout {
+body.dark, body.dark html, body.dark main, body.dark .container, body.dark .site-layout, body.dark .accordion-item{
   background: var(--bg) !important;
   color: var(--text) !important;
 }
@@ -222,14 +264,16 @@ body.dark p, body.dark a, body.dark li, body.dark .caption, body.dark .stat-labe
 body.dark .navbar-brand, body.dark .nav-link, body.dark .navbar-text, body.dark .lead {
   color: var(--text) !important;
 }
+
 body.dark .bg-light, body.dark .bg-white, body.dark .bg-secondary, body.dark .bg-transparent {
   background-color: var(--card-bg) !important;
   color: var(--text) !important;
 }
-body.dark pre, body.dark pre.bg-light, body.dark #code-snippet, body.dark .rounded {
+body.dark pre, body.dark pre.bg-light, body.dark #code-snippet, body.dark .rounded, body.dark .card, body.dark, body.dark .site-footer{
   background: var(--card-bg) !important;
   color: var(--text) !important;
   border: 1px solid var(--border) !important;
+  border-top: var(--border) !important;
 }
 body.dark .modal-content {
   background: var(--card-bg) !important;
@@ -254,11 +298,34 @@ body.dark .navbar.navbar-expand-lg .nav-link:hover,
 body.dark .navbar.navbar-expand-lg .nav-link:focus {
   color: #fff !important;
 }
-body.dark .site-footer {
-  background: transparent !important;
-  color: var(--muted) !important;
+body.dark .site-footer{
+  background: var(--bg) !important;
+  color: var(--text) !important;
+  border: var(--bg) !important;
 }
 body.dark [class*="bg-"], body.dark [class*="card"], body.dark .card {
+  color: var(--text) !important;
+}
+body.dark,
+body.dark html {
+  background-color: #0d0d0d !important; /* Очень тёмный оттенок */
+  color: var(--text) !important;
+  height: 100%;
+  min-height: 100vh;
+}
+html,
+body {
+  background-color: var(--bg-main) !important;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+body.dark .container,
+body.dark main,
+body.dark .site-layout,
+body.dark .content,
+body.dark .page-content {
+  background-color: transparent !important;
   color: var(--text) !important;
 }
 
