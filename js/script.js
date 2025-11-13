@@ -11,9 +11,11 @@ $(document).ready(function () {
   function applyTheme(theme) {
     if (theme === 'dark') {
       document.body.classList.add('dark');
+      document.body.style.backgroundColor = "#0d0d0d";
       $('[id^=theme-toggle]').attr('aria-pressed', 'true').text('☀️');
     } else {
       document.body.classList.remove('dark');
+      document.body.style.backgroundColor = "#fff";
       $('[id^=theme-toggle]').attr('aria-pressed', 'false').text('🌙');
     }
   }
